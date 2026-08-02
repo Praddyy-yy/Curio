@@ -9,7 +9,8 @@ interface UseTimerResult {
 }
 
 /**
- * A simple countdown timer hook.
+ * A reliable countdown timer hook based on Date.now().
+ * Immune to browser tab throttling or device sleep.
  *
  * @param durationInSeconds The duration to count down from.
  * @param onComplete Optional callback fired when the timer reaches 0.
@@ -20,49 +21,60 @@ export function useTimer(
 ): UseTimerResult {
   const [timeLeft, setTimeLeft] = useState(durationInSeconds)
   const [isRunning, setIsRunning] = useState(false)
+  const [endTime, setEndTime] = useState<number | null>(null)
+
   const onCompleteRef = useRef(onComplete)
 
-  // Keep the ref updated with the latest callback to avoid stale closures
-  // without needing it in the dependency array
   useEffect(() => {
     onCompleteRef.current = onComplete
   }, [onComplete])
 
-  // Reset time left when duration changes
+  // Reset time left when duration changes (only if not running)
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTimeLeft(durationInSeconds)
-  }, [durationInSeconds])
+    if (!isRunning) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTimeLeft(durationInSeconds)
+    }
+  }, [durationInSeconds, isRunning])
 
   const start = useCallback(() => {
+    if (isRunning) return
     setIsRunning(true)
-  }, [])
+    setEndTime(Date.now() + timeLeft * 1000)
+  }, [isRunning, timeLeft])
 
   const stop = useCallback(() => {
     setIsRunning(false)
+    setEndTime(null)
   }, [])
 
   const reset = useCallback(() => {
     setIsRunning(false)
+    setEndTime(null)
     setTimeLeft(durationInSeconds)
   }, [durationInSeconds])
 
   useEffect(() => {
-    if (!isRunning) return
+    if (!isRunning || !endTime) return
 
-    if (timeLeft <= 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsRunning(false)
-      onCompleteRef.current?.()
-      return
+    const tick = () => {
+      const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000))
+      setTimeLeft(remaining)
+
+      if (remaining <= 0) {
+        setIsRunning(false)
+        setEndTime(null)
+        onCompleteRef.current?.()
+      }
     }
 
-    const timerId = setInterval(() => {
-      setTimeLeft((prev) => prev - 1)
-    }, 1000)
+    // Call immediately to sync
+    tick()
 
+    // 100ms interval ensures crisp updates without missing seconds due to throttling
+    const timerId = setInterval(tick, 100)
     return () => clearInterval(timerId)
-  }, [isRunning, timeLeft])
+  }, [isRunning, endTime])
 
   return { timeLeft, isRunning, start, stop, reset }
 }

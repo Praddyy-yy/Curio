@@ -255,6 +255,7 @@ export function DiscoveryApp({ topics, initialTopic, initialMode }: DiscoveryApp
           <button
             onClick={() => rollTopic(true)}
             disabled={isRolling}
+            aria-label="Roll another topic"
             style={{
               marginTop: "16px",
               background: "none",

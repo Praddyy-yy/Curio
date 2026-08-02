@@ -248,8 +248,16 @@
 }
 
 /* ─────────────────────────────────────────────
-   Accessibility: reduce motion
+   Accessibility
    ───────────────────────────────────────────── */
+@layer base {
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -266,6 +274,14 @@
 @keyframes processingPulse {
   0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
   40%           { opacity: 1;   transform: scale(1.4); }
+}
+
+/* ─────────────────────────────────────────────
+   Loading pulse animation
+   ───────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
 }
 
 

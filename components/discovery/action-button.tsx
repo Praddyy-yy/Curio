@@ -367,6 +367,7 @@ export function ActionButton({
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
       <button
         onClick={handleStart}
+        aria-label={`Start ${mode === 'off_the_cuff' ? 'Rawdog' : 'Research'} — ${mode === 'off_the_cuff' ? Math.floor(speakingDuration / 60) : Math.floor(researchDuration / 60)} min timer`}
         style={{
           padding: "14px 32px",
           borderRadius: "var(--radius-full)",

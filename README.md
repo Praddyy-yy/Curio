@@ -8,7 +8,7 @@
 
 | Layer | Technology |
 |---|---|
-| Framework | [Next.js 15](https://nextjs.org) (App Router) |
+| Framework | [Next.js 16](https://nextjs.org) (App Router) |
 | Language | TypeScript |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) |
 | Components | [shadcn/ui](https://ui.shadcn.com) |
@@ -31,7 +31,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/curio.git
+git clone https://github.com/Praddyy-yy/Curio.git
 cd curio
 
 # Install dependencies
@@ -52,7 +52,8 @@ cp .env.example .env.local
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon/public key |
-| `GROQ_API_KEY` | Your Groq API key |
+| `SUPABASE_DB_URL` | PostgreSQL connection string (migration runner only — never exposed to browser) |
+| `GROQ_API_KEY` | Your Groq API key (Whisper transcription + Llama analysis) |
 
 > **Never commit `.env.local` to version control.**
 
@@ -107,6 +108,12 @@ public/         # Static assets
 | [`docs/architecture.md`](./docs/architecture.md) | System architecture and tech stack overview |
 | [`docs/decisions.md`](./docs/decisions.md) | Architectural Decision Records (ADRs) |
 | [`docs/learn.md`](./docs/learn.md) | Running learning notebook |
+
+---
+
+## Known Limitations
+
+Curio v1 intentionally focuses on an individual practice experience. Features such as collaborative learning, advanced analytics, multilingual support, and offline recording are intentionally deferred to future releases to keep the MVP focused.
 
 ---
 

@@ -166,6 +166,7 @@ Next.js App Router (Server Components)
 | Phase 6B | AI feedback (analysis route, editorial results layout, Practice Again) | ✅ Complete |
 | Phase 8 | Dark Theme (next-themes, design system tokens, Sun/Moon toggle) | ✅ Complete |
 | Phase 9 | Saved Topics (user library, session initiation directly from list) | ✅ Complete |
+| Phase 10 | Polish & Production Readiness (timer reliability, loading states, UX audit, accessibility) | ✅ Complete |
 
 ---
 

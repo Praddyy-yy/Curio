@@ -152,7 +152,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
           aria-hidden="true"
         />
 
-        {/* AI Summary placeholder */}
+        {/* AI Summary section */}
         <section style={{ marginBottom: "48px" }} aria-labelledby="summary-heading">
           <h2
             id="summary-heading"
@@ -176,21 +176,34 @@ export default async function TopicPage({ params }: TopicPageProps) {
               padding: "24px",
             }}
           >
-            <p
-              style={{
-                fontSize: "14px",
-                color: "var(--muted-foreground)",
-                lineHeight: "160%",
-                margin: 0,
-                fontStyle: "italic",
-              }}
-            >
-              A curated summary will appear here once this topic has been enriched.
-            </p>
+            {topic.summary ? (
+              <p
+                style={{
+                  fontSize: "15px",
+                  color: "var(--foreground)",
+                  lineHeight: "160%",
+                  margin: 0,
+                }}
+              >
+                {topic.summary}
+              </p>
+            ) : (
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "var(--muted-foreground)",
+                  lineHeight: "160%",
+                  margin: 0,
+                  fontStyle: "italic",
+                }}
+              >
+                A curated summary will appear here once this topic has been enriched.
+              </p>
+            )}
           </div>
         </section>
 
-        {/* Key Concepts placeholder */}
+        {/* Key Concepts section */}
         <section aria-labelledby="concepts-heading">
           <h2
             id="concepts-heading"
@@ -214,17 +227,27 @@ export default async function TopicPage({ params }: TopicPageProps) {
               padding: "24px",
             }}
           >
-            <p
-              style={{
-                fontSize: "14px",
-                color: "var(--muted-foreground)",
-                lineHeight: "160%",
-                margin: 0,
-                fontStyle: "italic",
-              }}
-            >
-              Key concepts will appear here after AI enrichment is complete.
-            </p>
+            {topic.key_concepts && Array.isArray(topic.key_concepts) && topic.key_concepts.length > 0 ? (
+              <ul style={{ margin: 0, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                {topic.key_concepts.map((concept: any, i: number) => (
+                  <li key={i} style={{ fontSize: "15px", color: "var(--foreground)", lineHeight: "150%" }}>
+                    <strong>{concept.term ?? concept}:</strong> {concept.definition ?? ""}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "var(--muted-foreground)",
+                  lineHeight: "160%",
+                  margin: 0,
+                  fontStyle: "italic",
+                }}
+              >
+                Key concepts will appear here after AI enrichment is complete.
+              </p>
+            )}
           </div>
         </section>
 

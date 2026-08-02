@@ -126,6 +126,7 @@ export default async function SavedTopicsPage() {
                           transition: "border-color var(--duration-fast)",
                         }}
                         className="saved-action-btn"
+                        aria-label={`Research ${t.title}`}
                         onMouseOver={(e) => (e.currentTarget.style.borderColor = "var(--border-strong)")}
                         onMouseOut={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       >
@@ -146,6 +147,7 @@ export default async function SavedTopicsPage() {
                           transition: "border-color var(--duration-fast)",
                         }}
                         className="saved-action-btn"
+                        aria-label={`Rawdog ${t.title}`}
                         onMouseOver={(e) => (e.currentTarget.style.borderColor = "var(--border-strong)")}
                         onMouseOut={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       >
