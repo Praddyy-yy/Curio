@@ -1,0 +1,365 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────
+   Tailwind v4 theme — maps CSS vars to utilities
+   ───────────────────────────────────────────── */
+@theme inline {
+  /* Core shadcn-compatible color tokens */
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+
+  /* Extended Curio semantic tokens */
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-border-strong:        var(--border-strong);
+  --color-accent-gold:          var(--accent-gold);
+  --color-accent-gold-hover:    var(--accent-gold-hover);
+  --color-accent-gold-light:    var(--accent-gold-light);
+  --color-success:              var(--success);
+  --color-warning:              var(--warning);
+  --color-error:                var(--error);
+  --color-info:                 var(--info);
+
+  /* Neutral scale utilities */
+  --color-neutral-50:  var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+
+  /* Typography */
+  --font-sans:    var(--font-geist), Inter, ui-sans-serif, sans-serif;
+  --font-serif:   var(--font-instrument-serif), Newsreader, ui-serif, serif;
+  --font-mono:    ui-monospace, monospace;
+  --font-heading: var(--font-geist), Inter, ui-sans-serif, sans-serif;
+
+  /* Border Radius — exact values from design system */
+  --radius-sm:   6px;    /* Badges, Chips */
+  --radius-md:   10px;   /* Buttons, Inputs, Dropdowns */
+  --radius-lg:   14px;   /* Cards, Panels */
+  --radius-xl:   18px;   /* Dialogs, Large modals */
+  --radius-2xl:  18px;   /* alias — keep for shadcn internals */
+  --radius-3xl:  18px;   /* alias — keep for shadcn internals */
+  --radius-4xl:  18px;   /* alias — keep for shadcn internals */
+  --radius-full: 9999px; /* Avatars, pill-shaped elements only */
+
+  /* Shadows — design system levels */
+  --shadow-none: none;
+  --shadow-sm:   0 2px 10px rgba(26, 24, 21, 0.06); /* Level 1: dropdowns, tooltips, popovers */
+  --shadow-md:   0 8px 30px rgba(26, 24, 21, 0.08); /* Level 2: dialogs, modals */
+  --shadow-lg:   0 8px 30px rgba(26, 24, 21, 0.08); /* alias → Level 2 */
+  --shadow-xl:   0 8px 30px rgba(26, 24, 21, 0.08); /* alias → Level 2 */
+}
+
+/* ─────────────────────────────────────────────
+   Light Theme
+   ───────────────────────────────────────────── */
+:root {
+  /* Primary palette */
+  --background:         #F7F4ED;
+  --foreground:         #1A1815;
+  --card:               #FBF9F4;
+  --card-foreground:    #1A1815;
+  --popover:            #FBF9F4;
+  --popover-foreground: #1A1815;
+
+  /* Actions */
+  --primary:              #B88946;
+  --primary-foreground:   #FBF9F4;
+  --secondary:            #EEE9E1;
+  --secondary-foreground: #1A1815;
+  --muted:                #EEE9E1;
+  --muted-foreground:     #9A9388;
+  --accent:               #EEE9E1;
+  --accent-foreground:    #1A1815;
+  --destructive:          #B94A48;
+
+  /* Borders & inputs */
+  --border: #E7E0D5;
+  --input:  #E7E0D5;
+  --ring:   #B88946;
+
+  /* Extended text */
+  --foreground-secondary: #6F685F;
+  --border-strong:        #CEC8BD;
+
+  /* Brand */
+  --accent-gold:       #B88946;
+  --accent-gold-hover: #D09B52;
+  --accent-gold-light: #E5C08A;
+
+  /* Semantic */
+  --success: #557A55;
+  --warning: #C78A3B;
+  --error:   #B94A48;
+  --info:    #4A6FAF;
+
+  /* Neutral scale */
+  --neutral-50:  #FDFBF8;
+  --neutral-100: #F7F4ED;
+  --neutral-200: #EEE9E1;
+  --neutral-300: #E2DDD2;
+  --neutral-400: #CEC8BD;
+  --neutral-500: #B8B1A7;
+  --neutral-600: #9A9388;
+  --neutral-700: #7A7368;
+  --neutral-800: #5A534A;
+  --neutral-900: #393530;
+  --neutral-950: #1A1815;
+
+  /* Radius as CSS vars (for arbitrary value use in components) */
+  --radius:      14px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   18px;
+  --radius-full: 9999px;
+
+  /* Motion */
+  --duration-fast:    120ms;
+  --duration-default: 180ms;
+  --duration-complex: 250ms;
+  --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─────────────────────────────────────────────
+   Dark Theme
+   All values sourced exactly from docs/design-system.md § Curio Dark Theme Design System.
+   Do NOT approximate — use these exact hex values.
+   ───────────────────────────────────────────── */
+.dark {
+  /* ── Primary palette ──────────────────────────── */
+  --background:         #14110F;
+  --foreground:         #F4EFE6;
+  --card:               #1C1815;
+  --card-foreground:    #F4EFE6;
+  --popover:            #26211D;
+  --popover-foreground: #F4EFE6;
+
+  /* ── Actions ──────────────────────────────────── */
+  --primary:              #C89B58;
+  --primary-foreground:   #14110F;
+  --secondary:            #26211D;
+  --secondary-foreground: #F4EFE6;
+  --muted:                #26211D;
+  --muted-foreground:     #8B847A;
+  --accent:               #26211D;
+  --accent-foreground:    #F4EFE6;
+  --destructive:          #C96A63;
+
+  /* ── Borders & inputs ─────────────────────────── */
+  --border:        #34302B;
+  --border-strong: #4A453F;
+  --border-subtle: #2D2925;
+  --input:         #34302B;
+  --ring:          #C89B58;
+
+  /* ── Extended text ────────────────────────────── */
+  --foreground-secondary: #B8B0A5;
+
+  /* ── Brand ────────────────────────────────────── */
+  --accent-gold:       #C89B58;
+  --accent-gold-hover: #D9AC67;
+  --accent-gold-light: #E3C28A;
+
+  /* ── Semantic ─────────────────────────────────── */
+  --success: #6F8D69;
+  --warning: #D39A48;
+  --error:   #C96A63;
+  --info:    #7393C9;
+
+  /* ── Neutral scale ────────────────────────────── */
+  --neutral-50:  #F4EFE6;
+  --neutral-100: #E8E1D7;
+  --neutral-200: #D5CDC1;
+  --neutral-300: #B8B0A5;
+  --neutral-400: #9D958A;
+  --neutral-500: #8B847A;
+  --neutral-600: #6F685F;
+  --neutral-700: #524C46;
+  --neutral-800: #34302B;
+  --neutral-900: #1C1815;
+  --neutral-950: #14110F;
+
+  /* ── Background layers ────────────────────────── */
+  --surface:          #1C1815;
+  --surface-elevated: #26211D;
+  --overlay:          rgba(20, 17, 15, 0.72);
+
+  /* ── Shadows (deeper in dark — design system values) */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.22);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.28);
+}
+
+
+/* ─────────────────────────────────────────────
+   Base styles
+   ───────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Dialog animation: scale 0.98→1 (design system spec)
+   ───────────────────────────────────────────── */
+[data-slot="dialog-content"] {
+  --tw-enter-scale: 0.98;
+  --tw-exit-scale:  0.98;
+}
+
+/* ─────────────────────────────────────────────
+   Accessibility: reduce motion
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Processing screen dot animation
+   ───────────────────────────────────────────── */
+@keyframes processingPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+  40%           { opacity: 1;   transform: scale(1.4); }
+}
+
+
+/* ─────────────────────────────────────────────
+   Topic Card
+   ───────────────────────────────────────────── */
+.topic-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border-color var(--duration-default) var(--ease-out);
+}
+
+.topic-card:hover {
+  border-color: var(--border-strong);
+}
+
+.topic-card__category {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--foreground-secondary);
+  line-height: 1;
+  margin: 0;
+}
+
+.topic-card__title-link {
+  text-decoration: none;
+}
+
+.topic-card__title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 125%;
+  color: var(--foreground);
+  margin: 0;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.topic-card__title-link:hover .topic-card__title {
+  color: var(--accent-gold);
+}
+
+.topic-card__footer {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* ─────────────────────────────────────────────
+   Nav
+   ───────────────────────────────────────────── */
+.nav-signout {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--foreground-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.nav-signout:hover {
+  color: var(--foreground);
+}
+
+.nav-link:hover {
+  color: var(--foreground) !important;
+}
+
+.theme-toggle:hover {
+  color: var(--accent-gold) !important;
+}
+
+
+/* ─────────────────────────────────────────────
+   Back link (topic detail)
+   ───────────────────────────────────────────── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--foreground-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.back-link:hover {
+  color: var(--foreground);
+}

@@ -1,0 +1,215 @@
+# Artificial Intelligence
+- Chatbots
+- Voice Assistants
+- AI Art
+- Face Recognition
+- Recommendation Algorithms
+- Autocorrect
+- Deepfakes
+- Self-Driving Cars
+- Smart Speakers
+- Predictive Text
+- Spam Filters
+- AI Generated Music
+- Video Filters
+- Auto-Translate
+- Personalized Ads
+- Fitness Trackers
+- Smart Home Devices
+- AI Tutors
+- Robot Pets
+- Fake News Detection
+
+# Computer Science
+- Passwords
+- QR Codes
+- Wi-Fi
+- Notifications
+- Search Engines
+- USB Drives
+- Cloud Storage
+- Screenshots
+- Emojis
+- Autoplay
+- Dark Mode
+- Two-Factor Authentication
+- Browser Tabs
+- Incognito Mode
+- Software Updates
+- File Formats
+- Bluetooth
+- Battery Life
+- Typing Speed
+- Copy Paste
+- Online Privacy
+- App Permissions
+- Loading Screens
+- Backup Files
+- Keyboard Shortcuts
+
+# Economics
+- Pocket Money
+- Discounts
+- Saving Money
+- Online Shopping
+- Cash vs UPI
+- Subscriptions
+- Impulse Buying
+- Bargaining
+- Credit Cards
+- Budgeting
+- Loans
+- Garage Sales
+- Black Friday Sales
+- Tipping
+- Freelancing
+- Side Hustles
+- Rent vs Buy
+- Loyalty Points
+- Return Policies
+- Minimum Wage
+
+# History
+- Family Traditions
+- Old Photographs
+- Monuments
+- Museums
+- Festivals
+- Handwritten Letters
+- Family Heirlooms
+- Old Coins
+- Ancient Ruins
+- Local Legends
+- School Uniforms
+- Old Maps
+- Grandparents' Stories
+- Traditional Clothing
+- Historical Landmarks
+- Time Capsules
+- Old Newspapers
+- Folk Tales
+- Vintage Toys
+- Ancestry
+
+# Philosophy
+- Lying
+- Happiness
+- Success
+- Luck
+- Friendship
+- Regret
+- Freedom
+- Identity
+- Fairness
+- Change
+- Patience
+- Kindness
+- Ambition
+- Silence
+- Growing Up
+- Forgiveness
+- Simplicity
+- Curiosity
+- Comfort Zones
+- Second Chances
+
+# Psychology
+- First Impressions
+- Habits
+- Motivation
+- Stress
+- Dreams
+- Confidence
+- Procrastination
+- Nostalgia
+- Overthinking
+- Comfort Food
+- Peer Pressure
+- Body Language
+- Mood Swings
+- Self-Talk
+- Fear of Failure
+- Multitasking
+- Comparison
+- Personal Space
+- Gut Feelings
+- Daydreaming
+- Small Talk
+- Embarrassment
+- Willpower
+- Sense of Humor
+- Memory Lapses
+
+# Science
+- Rain
+- Fire
+- Gravity
+- Sleep
+- Seasons
+- Lightning
+- Rainbows
+- Magnets
+- Static Electricity
+- Clouds
+- Tides
+- Shadows
+- Sunburn
+- Hiccups
+- Yawning
+- Goosebumps
+- Echoes
+- Ice Melting
+- Boiling Water
+- Growing Plants
+- Blood Pressure
+- Muscle Cramps
+- Color Blindness
+- Optical Illusions
+- Body Temperature
+
+# General
+- Doorbell
+- Group Chat
+- Junk Drawer
+- Voicemail
+- Elevator
+- Umbrella
+- Coffee Mug
+- Window Seat
+- Backpack
+- Birthday Cake
+- Alarm Clocks
+- Traffic Jams
+- Waiting Rooms
+- Lost Socks
+- House Keys
+- Public Transport
+- Neighbors
+- Grocery Lists
+- Parking Spots
+- Rainy Days
+- Long Queues
+- Power Cuts
+- Morning Routines
+- Road Trips
+- Street Food
+- Handshakes
+- Doormats
+- Ceiling Fans
+- Comfort Zones at Home
+- Kitchen Smells
+- Old Furniture
+- School Bells
+- Lunch Breaks
+- Weekend Plans
+- Board Games
+- Rainy Weekends
+- Balcony Views
+- Broken Umbrellas
+- Waiting for the Bus
+- First Day Nerves
+- Handwritten Notes
+- Spare Keys
+- Doodles
+- Lost and Found
+- Naps
