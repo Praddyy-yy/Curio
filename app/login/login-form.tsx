@@ -7,7 +7,10 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { signInAction, signInInitialState } from "./actions"
+import { signInAction } from "./actions"
+import type { SignInState } from "./actions"
+
+const signInInitialState: SignInState = { error: null }
 
 /* ─── Google G logo ─── */
 function GoogleIcon() {

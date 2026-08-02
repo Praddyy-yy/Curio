@@ -87,8 +87,7 @@ export default async function SavedTopicsPage() {
                   textDecoration: "none",
                   transition: "opacity var(--duration-fast)",
                 }}
-                onMouseOver={(e) => (e.currentTarget.style.opacity = "0.85")}
-                onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
+                className="hover-opacity-btn"
               >
                 Discover Topics
               </Link>
@@ -127,8 +126,6 @@ export default async function SavedTopicsPage() {
                         }}
                         className="saved-action-btn"
                         aria-label={`Research ${t.title}`}
-                        onMouseOver={(e) => (e.currentTarget.style.borderColor = "var(--border-strong)")}
-                        onMouseOut={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       >
                         Research
                       </Link>
@@ -148,8 +145,6 @@ export default async function SavedTopicsPage() {
                         }}
                         className="saved-action-btn"
                         aria-label={`Rawdog ${t.title}`}
-                        onMouseOver={(e) => (e.currentTarget.style.borderColor = "var(--border-strong)")}
-                        onMouseOut={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
                       >
                         Rawdog
                       </Link>
@@ -168,8 +163,7 @@ export default async function SavedTopicsPage() {
                             cursor: "pointer",
                             transition: "color var(--duration-fast)",
                           }}
-                          onMouseOver={(e) => (e.currentTarget.style.color = "var(--destructive)")}
-                          onMouseOut={(e) => (e.currentTarget.style.color = "var(--muted-foreground)")}
+                          className="saved-remove-btn"
                           aria-label={`Remove ${t.title} from saved`}
                         >
                           Remove

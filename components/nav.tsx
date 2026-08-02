@@ -26,10 +26,9 @@ export function Nav() {
           margin: "0 auto",
           padding: "0 32px",
           height: "56px",
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
           alignItems: "center",
-          justifyContent: "space-between",
-          gap: "24px",
         }}
       >
         {/* Logo */}
@@ -42,14 +41,14 @@ export function Nav() {
             fontWeight: 400,
             color: "var(--foreground)",
             letterSpacing: "-0.01em",
-            flexShrink: 0,
+            justifySelf: "start",
           }}
         >
           Curio
         </Link>
 
         {/* Nav links */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        <nav style={{ display: "flex", alignItems: "center", gap: "24px", justifySelf: "center" }}>
           <Link
             href="/saved"
             style={{
@@ -77,7 +76,7 @@ export function Nav() {
         </nav>
 
         {/* Right side: theme toggle + sign out */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", justifySelf: "end" }}>
           <ThemeToggle />
           <form action={signOutAction}>
             <button type="submit" className="nav-signout">

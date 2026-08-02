@@ -9,8 +9,7 @@ export type SignUpState = {
   success: boolean
 }
 
-const initialState: SignUpState = { error: null, success: false }
-export { initialState as signUpInitialState }
+
 
 /**
  * Email + password sign-up.

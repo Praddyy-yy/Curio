@@ -5,7 +5,10 @@ import { useActionState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { signUpAction, signUpInitialState } from "./actions"
+import { signUpAction } from "./actions"
+import type { SignUpState } from "./actions"
+
+const signUpInitialState: SignUpState = { error: null, success: false }
 
 interface SignupFormProps {
   /** Error pre-populated from URL search param (rare for signup). */

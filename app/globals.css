@@ -286,7 +286,7 @@
 
 
 /* ─────────────────────────────────────────────
-   Topic Card
+   Topic Card & Saved Page Buttons
    ───────────────────────────────────────────── */
 .topic-card {
   background: var(--card);
@@ -297,6 +297,18 @@
   flex-direction: column;
   gap: 16px;
   transition: border-color var(--duration-default) var(--ease-out);
+}
+
+.saved-action-btn:hover {
+  border-color: var(--border-strong) !important;
+}
+
+.saved-remove-btn:hover {
+  color: var(--destructive) !important;
+}
+
+.hover-opacity-btn:hover {
+  opacity: 0.85 !important;
 }
 
 .topic-card:hover {

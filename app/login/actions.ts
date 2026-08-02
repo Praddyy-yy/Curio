@@ -7,8 +7,7 @@ export type SignInState = {
   error: string | null
 }
 
-const initialState: SignInState = { error: null }
-export { initialState as signInInitialState }
+
 
 /**
  * Email + password sign-in.
