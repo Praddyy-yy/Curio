@@ -6,6 +6,8 @@ interface UseTimerResult {
   start: () => void
   stop: () => void
   reset: () => void
+  /** Extend the running timer by `seconds` without restarting the MediaRecorder or resetting state. */
+  extend: (seconds: number) => void
 }
 
 /**
@@ -54,6 +56,12 @@ export function useTimer(
     setTimeLeft(durationInSeconds)
   }, [durationInSeconds])
 
+  const extend = useCallback((seconds: number) => {
+    if (!isRunning) return
+    setEndTime((prev) => (prev !== null ? prev + seconds * 1000 : null))
+    setTimeLeft((prev) => prev + seconds)
+  }, [isRunning])
+
   useEffect(() => {
     if (!isRunning || !endTime) return
 
@@ -76,5 +84,5 @@ export function useTimer(
     return () => clearInterval(timerId)
   }, [isRunning, endTime])
 
-  return { timeLeft, isRunning, start, stop, reset }
+  return { timeLeft, isRunning, start, stop, reset, extend }
 }

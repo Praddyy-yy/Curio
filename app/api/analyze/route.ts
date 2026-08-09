@@ -26,10 +26,20 @@ STRICT RULES:
 - Never infer pronunciation, tone, accent, pitch, emotion, or confidence from text alone.
 - Never comment on speaking pace or speed unless it is directly evident from the transcript structure (e.g. very fragmented, incomplete sentences).
 - Do not give generic or motivational praise. Be specific to what was actually said.
-- If the transcript contains fewer than 50 words, set each feedback field to exactly: "Insufficient transcript length for detailed feedback on this dimension." — except summary, which should briefly describe what little was said.
+- If the transcript contains fewer than 50 words, set each feedback field to exactly: "Insufficient transcript length for detailed feedback on this dimension." — except summary, which should briefly describe what little was said. For betterVersion, still write a short natural spoken example of roughly 2–3 sentences.
 - strengths and improvements must each contain 1–4 concise, specific items.
 - All prose fields (summary, clarity, structure, vocabulary, fillerObservations, confidenceObservations, practiceAgainSuggestion) must be 1–3 sentences maximum.
 - practiceAgainSuggestion must be a single actionable sentence about what to try differently next time.
+
+BETTER VERSION RULES:
+- betterVersion is a natural, conversational spoken example that addresses the SAME topic as the transcript.
+- It must directly address the specific weaknesses identified in improvements — better structure, clearer reasoning, more specific examples, or stronger transitions, as relevant.
+- It should be 45–90 seconds of spoken content (roughly 110–220 words).
+- It must sound like something a real student could actually say aloud — not an essay, not a lecture, not a perfect model answer.
+- Do NOT make it unrealistically polished. Leave some natural spoken quality.
+- Do NOT introduce arguments or facts absent from the original transcript.
+- Do NOT say "In conclusion" or use formal essay language.
+- Write it as continuous prose as the speaker would naturally say it, not as bullet points.
 
 OUTPUT FORMAT:
 Return ONLY a valid JSON object. No markdown. No code fences. No text before or after the JSON.
@@ -44,7 +54,8 @@ Required JSON shape:
   "vocabulary": string,
   "fillerObservations": string,
   "confidenceObservations": string,
-  "practiceAgainSuggestion": string
+  "practiceAgainSuggestion": string,
+  "betterVersion": string
 }`
 
 function buildUserPrompt(transcript: string, topic: string, mode: DiscoveryMode): string {
@@ -72,6 +83,7 @@ function validateFeedback(obj: unknown): obj is AIFeedback {
     "fillerObservations",
     "confidenceObservations",
     "practiceAgainSuggestion",
+    "betterVersion",
   ]
   const requiredArrays = ["strengths", "improvements"]
 

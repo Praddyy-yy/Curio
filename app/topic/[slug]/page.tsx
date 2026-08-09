@@ -229,11 +229,16 @@ export default async function TopicPage({ params }: TopicPageProps) {
           >
             {topic.key_concepts && Array.isArray(topic.key_concepts) && topic.key_concepts.length > 0 ? (
               <ul style={{ margin: 0, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                {topic.key_concepts.map((concept: any, i: number) => (
-                  <li key={i} style={{ fontSize: "15px", color: "var(--foreground)", lineHeight: "150%" }}>
-                    <strong>{concept.term ?? concept}:</strong> {concept.definition ?? ""}
-                  </li>
-                ))}
+                {topic.key_concepts.map((concept: unknown, i: number) => {
+                  const c = concept as { term?: string; definition?: string } | string
+                  const term = typeof c === "string" ? c : (c.term ?? "")
+                  const def = typeof c === "string" ? "" : (c.definition ?? "")
+                  return (
+                    <li key={i} style={{ fontSize: "15px", color: "var(--foreground)", lineHeight: "150%" }}>
+                      <strong>{term}:</strong> {def}
+                    </li>
+                  )
+                })}
               </ul>
             ) : (
               <p

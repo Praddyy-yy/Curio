@@ -10,77 +10,123 @@ import { RESULTS_STORAGE_KEY, type SessionResult } from "@/lib/session"
 /**
  * Results page — /results
  *
- * Client Component that reads the session result from sessionStorage.
- * Redirects to / on direct access (no stored result).
- * The result is cleared from sessionStorage after reading — this page is ephemeral.
+ * Reads the session result from sessionStorage (written by action-button).
+ * Navigates to / only if there is genuinely no result (direct URL access).
  *
- * Phase 7: fires a fire-and-forget POST /api/save-session after the result is read.
+ * Critical design: the result is stored in a ref (resultRef) before being
+ * removed from sessionStorage. This prevents React Strict Mode's double-
+ * invocation from seeing an empty sessionStorage on the second run and
+ * incorrectly redirecting to /.
+ *
+ * Session saving is fire-and-forget background work. It NEVER controls
+ * whether the user sees their results.
  */
 export default function ResultsPage() {
   const router = useRouter()
   const [result, setResult] = useState<SessionResult | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
-  const [saveError, setSaveError] = useState(false)
-  const hasSaved = useRef(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+
+  /**
+   * Stores the parsed result from sessionStorage so the second Strict Mode
+   * effect invocation can still access it even after sessionStorage is cleared.
+   */
+  const resultRef = useRef<SessionResult | null>(null)
+
+  /**
+   * Prevents save from firing more than once per mount cycle.
+   * hasSavedRef is never reset — retry is explicit via button.
+   */
+  const hasSavedRef = useRef(false)
 
   const saveSession = async (parsed: SessionResult) => {
-    if (isSaving || !parsed.feedback) return
+    if (!parsed.feedback) return
     setIsSaving(true)
-    setSaveError(false)
+    setSaveError(null)
 
     try {
       const res = await fetch("/api/save-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          sessionId: parsed.sessionId,
           topic: parsed.topic,
           mode: parsed.mode,
           durationSeconds: parsed.durationSeconds ?? 0,
+          transcript: parsed.transcript ?? "",
           feedback: parsed.feedback,
         }),
       })
 
       if (!res.ok) {
-        throw new Error("Failed to save")
+        // Capture the actual server error message instead of hiding it
+        let serverError = `HTTP ${res.status}`
+        try {
+          const body = await res.json()
+          serverError = body.error ?? serverError
+        } catch {
+          try { serverError = await res.text() } catch { /* ignore */ }
+        }
+        console.error("[results] save-session server error:", serverError)
+        throw new Error(serverError)
       }
-      
-      hasSaved.current = true
     } catch (err) {
-      console.error("[results] save-session failed:", err)
-      setSaveError(true)
-      hasSaved.current = false
+      const msg = err instanceof Error ? err.message : "Unknown error"
+      console.error("[results] save-session failed:", msg)
+      setSaveError(msg)
     } finally {
       setIsSaving(false)
     }
   }
 
   useEffect(() => {
+    // If we already have the result from a previous Strict Mode run, don't
+    // re-read sessionStorage (it has already been cleared).
+    if (resultRef.current) {
+      setResult(resultRef.current)
+      setIsLoading(false)
+      return
+    }
+
     try {
       const raw = sessionStorage.getItem(RESULTS_STORAGE_KEY)
+
       if (!raw) {
+        // Genuinely no result — user accessed /results directly
         router.replace("/")
         return
       }
+
       const parsed = JSON.parse(raw) as SessionResult
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      resultRef.current = parsed        // store before clearing
       setResult(parsed)
-      // Clear after reading — result is intentionally ephemeral
+
+      // Clear sessionStorage — results are ephemeral.
+      // resultRef is the source of truth from here on.
       sessionStorage.removeItem(RESULTS_STORAGE_KEY)
 
-      // Guard: run exactly once per mount. Strict mode double-invoke safe.
-      if (!hasSaved.current && parsed.feedback) {
+      // Fire save exactly once. Database enforces UNIQUE(user_id, session_id)
+      // as the final idempotency guarantee.
+      if (!hasSavedRef.current && parsed.feedback) {
+        hasSavedRef.current = true
         saveSession(parsed)
       }
-    } catch {
+    } catch (err) {
+      console.error("[results] Failed to parse session result:", err)
       router.replace("/")
     } finally {
       setIsLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router])
+  }, [])
 
-  if (isLoading || !result) {
+  if (isLoading) {
+    return null
+  }
+
+  if (!result) {
+    // Will redirect via useEffect — render nothing
     return null
   }
 
@@ -96,12 +142,26 @@ export default function ResultsPage() {
       <Nav />
 
       {saveError && (
-        <div style={{ background: "var(--error)", color: "var(--background)", padding: "12px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: "14px", fontWeight: 500 }}>
-            Session could not be saved to your journey.
+        <div
+          style={{
+            background: "var(--error)",
+            color: "var(--background)",
+            padding: "10px 32px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "13px",
+            gap: "16px",
+          }}
+        >
+          <span style={{ fontWeight: 500 }}>
+            Session could not be saved to your journey.{" "}
+            <span style={{ fontWeight: 400, opacity: 0.85 }}>({saveError})</span>
           </span>
           <button
-            onClick={() => saveSession(result)}
+            onClick={() => {
+              if (result) saveSession(result)
+            }}
             disabled={isSaving}
             style={{
               background: "transparent",
@@ -109,18 +169,19 @@ export default function ResultsPage() {
               color: "var(--background)",
               padding: "4px 12px",
               borderRadius: "var(--radius-full)",
-              fontSize: "13px",
+              fontSize: "12px",
               cursor: isSaving ? "not-allowed" : "pointer",
               opacity: isSaving ? 0.7 : 1,
+              whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
           >
-            {isSaving ? "Retrying..." : "Retry"}
+            {isSaving ? "Retrying…" : "Retry"}
           </button>
         </div>
       )}
 
       <main style={{ flex: 1 }}>
-        {/* Back link */}
         <div
           style={{
             maxWidth: "680px",
@@ -151,4 +212,3 @@ export default function ResultsPage() {
     </div>
   )
 }
-

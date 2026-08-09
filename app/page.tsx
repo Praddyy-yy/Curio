@@ -28,11 +28,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const topics = (topicsResult.data as Pick<Topic, "id" | "slug" | "title" | "category">[] | null) ?? []
 
+  // Fetch the authenticated user's email — piggy-backs on the existing client, no extra API call
+  const { data: { user } } = await supabase.auth.getUser()
+  const userEmail = user?.email ?? null
+
   return (
     <div style={{ minHeight: "100svh", background: "var(--background)", display: "flex", flexDirection: "column" }}>
       <Nav />
       <main style={{ flex: 1, position: "relative" }}>
-        <DiscoveryApp topics={topics} initialTopic={initialTopic} initialMode={initialMode} />
+        <DiscoveryApp topics={topics} initialTopic={initialTopic} initialMode={initialMode} userEmail={userEmail} />
       </main>
     </div>
   )

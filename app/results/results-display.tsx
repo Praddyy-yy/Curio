@@ -175,6 +175,27 @@ function TranscriptSection({ transcript }: { transcript: string }) {
   )
 }
 
+// ── Better version section ─────────────────────────────────────────────────────
+
+function BetterVersionSection({ betterVersion }: { betterVersion: string }) {
+  return (
+    <ProseSection label="A stronger version">
+      <p
+        style={{
+          fontSize: "17px",
+          lineHeight: "175%",
+          color: "var(--foreground)",
+          margin: 0,
+          borderLeft: "2px solid var(--accent-gold)",
+          paddingLeft: "20px",
+        }}
+      >
+        {betterVersion}
+      </p>
+    </ProseSection>
+  )
+}
+
 // ── Feedback fallback (when AI analysis failed) ───────────────────────────────
 
 function FeedbackUnavailable() {
@@ -255,6 +276,14 @@ export function ResultsDisplay({ result }: ResultsDisplayProps) {
 
       {/* ── Transcript ── */}
       <TranscriptSection transcript={transcript} />
+
+      {/* ── A Stronger Version — shown when AI returns betterVersion ── */}
+      {f?.betterVersion && (
+        <>
+          <Divider />
+          <BetterVersionSection betterVersion={f.betterVersion} />
+        </>
+      )}
 
       <Divider />
 

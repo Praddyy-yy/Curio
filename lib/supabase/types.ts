@@ -66,14 +66,16 @@ export type Json =
 
 /**
  * A row in the `speaking_sessions` table.
- * Lightweight session record — no transcript, no audio, no raw AI response.
  */
 export interface SpeakingSession {
   id: string
+  /** Client-generated UUID used as an idempotency key. */
+  session_id: string
   user_id: string
   topic: string
   mode: "off_the_cuff" | "research"
   duration_seconds: number
+  transcript: string
   summary: string
   strengths: string[]          // jsonb; cast to string[] after fetching
   improvements: string[]       // jsonb; cast to string[] after fetching
@@ -86,10 +88,13 @@ export interface SpeakingSession {
 
 /** Shape used for insert — jsonb fields typed as Json[] for the Supabase client. */
 export interface InsertSpeakingSessionDB {
+  /** Client-generated UUID — idempotency key. */
+  session_id: string
   user_id: string
   topic: string
   mode: "off_the_cuff" | "research"
   duration_seconds: number
+  transcript: string
   summary: string
   strengths: Json
   improvements: Json

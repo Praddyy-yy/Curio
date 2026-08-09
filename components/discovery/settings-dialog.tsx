@@ -29,9 +29,11 @@ export const DEFAULT_SETTINGS: Settings = {
 interface SettingsDialogProps {
   settings: Settings
   onSettingsChange: (settings: Settings) => void
+  /** Authenticated user email, displayed read-only in the Account section. */
+  userEmail?: string | null
 }
 
-export function SettingsDialog({ settings, onSettingsChange }: SettingsDialogProps) {
+export function SettingsDialog({ settings, onSettingsChange, userEmail }: SettingsDialogProps) {
   const [open, setOpen] = useState(false)
   
   const handleUpdate = (updates: Partial<Settings>) => {
@@ -130,6 +132,14 @@ export function SettingsDialog({ settings, onSettingsChange }: SettingsDialogPro
               <Label htmlFor="reduce-motion" style={{ fontSize: "15px", fontWeight: 500, color: "var(--foreground)", cursor: "pointer" }}>Reduce Motion</Label>
             </div>
           </div>
+
+          {/* Account */}
+          {userEmail && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px", paddingTop: "20px", borderTop: "1px solid var(--border)" }}>
+              <p style={{ margin: 0, fontSize: "11px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--foreground)", opacity: 0.5 }}>Account</p>
+              <p style={{ margin: 0, fontSize: "14px", color: "var(--foreground)", opacity: 0.7, wordBreak: "break-all" }}>{userEmail}</p>
+            </div>
+          )}
 
           {/* Footer */}
           <div style={{ display: "flex", flexDirection: "column", gap: "12px", paddingTop: "20px", borderTop: "1px solid var(--border)" }}>

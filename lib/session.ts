@@ -22,6 +22,8 @@ export interface AIFeedback {
   fillerObservations: string
   confidenceObservations: string
   practiceAgainSuggestion: string
+  /** A natural, conversational example of a stronger spoken response to the same topic. */
+  betterVersion: string
 }
 
 /**
@@ -30,6 +32,8 @@ export interface AIFeedback {
  * still displayed so the user doesn't lose their recording.
  */
 export interface SessionResult {
+  /** Client-generated UUID assigned before recording begins. Acts as idempotency key for save-session. */
+  sessionId: string
   topic: string
   mode: DiscoveryMode
   transcript: string

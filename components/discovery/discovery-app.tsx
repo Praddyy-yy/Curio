@@ -22,9 +22,11 @@ interface DiscoveryAppProps {
   initialTopic?: string
   /** Mode to pre-select (from Practice Again URL param). */
   initialMode?: string
+  /** Authenticated user's email — passed from the Server Component to avoid a client-side auth call. */
+  userEmail?: string | null
 }
 
-export function DiscoveryApp({ topics, initialTopic, initialMode }: DiscoveryAppProps) {
+export function DiscoveryApp({ topics, initialTopic, initialMode, userEmail }: DiscoveryAppProps) {
   const [mode, setMode] = useState<DiscoveryMode>(
     initialMode === "research" ? "research" : "off_the_cuff"
   )
@@ -165,7 +167,7 @@ export function DiscoveryApp({ topics, initialTopic, initialMode }: DiscoveryApp
       
       {/* Settings — pinned top-right */}
       <div style={{ position: "absolute", top: "32px", right: "32px" }}>
-        <SettingsDialog settings={settings} onSettingsChange={handleSettingsChange} />
+        <SettingsDialog settings={settings} onSettingsChange={handleSettingsChange} userEmail={userEmail} />
       </div>
 
       {/* Main Content Area */}

@@ -10,6 +10,12 @@ interface UseAudioRecorderResult {
   error: string | null
   startRecording: () => Promise<void>
   stopRecording: () => void
+  /**
+   * Preflight check: requests microphone permission and immediately releases
+   * the stream. Returns true if permission was granted, false if denied.
+   * The browser caches the grant so startRecording() won't prompt again.
+   */
+  checkMicPermission: () => Promise<boolean>
 }
 
 /**
@@ -43,6 +49,35 @@ export function useAudioRecorder(): UseAudioRecorderResult {
       return false
     }
   }
+
+  const checkMicPermission = useCallback(async (): Promise<boolean> => {
+    try {
+      // If the Permissions API is available, check without prompting first
+      if (typeof navigator.permissions?.query === "function") {
+        const status = await navigator.permissions.query({ name: "microphone" as PermissionName })
+        if (status.state === "granted") {
+          setIsPermissionGranted(true)
+          setError(null)
+          return true
+        }
+        if (status.state === "denied") {
+          setIsPermissionGranted(false)
+          setError("Microphone access needed.")
+          return false
+        }
+      }
+      // Prompt for permission, then immediately release the stream
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      stream.getTracks().forEach((track) => track.stop())
+      setIsPermissionGranted(true)
+      setError(null)
+      return true
+    } catch {
+      setIsPermissionGranted(false)
+      setError("Microphone access needed.")
+      return false
+    }
+  }, [])
 
   const startRecording = useCallback(async () => {
     // Reset blob from any previous recording
@@ -111,5 +146,6 @@ export function useAudioRecorder(): UseAudioRecorderResult {
     error,
     startRecording,
     stopRecording,
+    checkMicPermission,
   }
 }
